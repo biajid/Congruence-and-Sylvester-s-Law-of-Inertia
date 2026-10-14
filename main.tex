@@ -1,0 +1,2614 @@
+
+\documentclass[11pt]{article}
+
+% --------------------------------------------------
+% Packages
+% --------------------------------------------------
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{hyperref}
+
+% --------------------------------------------------
+% Formatting
+% --------------------------------------------------
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.3cm}
+
+% --------------------------------------------------
+% Theorem Environments
+% --------------------------------------------------
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+% --------------------------------------------------
+% Title
+% --------------------------------------------------
+\title{\textbf{Congruence and Sylvester's Law of Inertia}\\
+\large An Elementary Exposition with Applications In Mathematical Statistics}
+
+\author{Biajid Chowdhury
+}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+% --------------------------------------------------
+% Abstract
+% --------------------------------------------------
+\begin{abstract}
+
+In many modern undergraduate linear algebra curricula,
+the concept of \emph{inertia} receives relatively little
+attention, if it is discussed at all. Consequently,
+students may become familiar with the diagonalization
+of symmetric matrices and the notion of matrix
+similarity without fully appreciating the distinction
+between similarity and congruence. This distinction,
+although subtle at first glance, is fundamental to
+the theory of quadratic forms.
+
+In this note, we aim to clarify these ideas and
+develop Sylvester's Law of Inertia from first
+principles. Beginning with quadratic forms and
+changes of basis, we introduce matrix congruence,
+define the inertia of a real symmetric matrix,
+and establish the remarkable fact that the numbers
+of positive, negative, and zero eigenvalues remain
+unchanged under congruence.
+
+Particular attention is devoted to a detailed,
+self-contained proof of the theorem, emphasizing
+the underlying linear algebra rather than merely
+stating the result.
+
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+% --------------------------------------------------
+% 1. Introduction
+% --------------------------------------------------
+\section{Introduction}
+
+One of the fundamental results of linear algebra is the
+spectral theorem, which guarantees that every real symmetric
+matrix can be diagonalized by an orthogonal change of basis.
+While diagonalization and matrix similarity are familiar
+topics in undergraduate linear algebra, the closely related
+notion of \emph{congruence} often receives less attention.
+
+Similarity and congruence arise in different mathematical
+settings. The transformation $S^{-1}AS$ describes a change
+of basis for a linear operator, whereas $S^TAS$ arises
+naturally from a change of coordinates in a quadratic form.
+Indeed, if a real symmetric matrix $A$ defines
+\[
+    q(x)=x^TAx,
+\]
+then the substitution $x=Sy$, with $S$ invertible, gives
+\[
+    q(x)=y^T(S^TAS)y.
+\]
+Thus, $A$ and $S^TAS$ represent the same quadratic form
+in different coordinate systems and are said to be
+\emph{congruent}.
+
+Unlike similarity, congruence does not generally preserve
+individual eigenvalues. Remarkably, however, it preserves
+the numbers of positive, negative, and zero eigenvalues.
+These three numbers constitute the \emph{inertia} of a
+real symmetric matrix, and their invariance under
+congruence is known as \emph{Sylvester's Law of Inertia}.
+
+The purpose of this note is to develop this theorem from
+first principles. We begin with a brief review of quadratic forms and
+changes of basis, distinguish congruence from similarity,
+and introduce the notions of inertia, rank, index, and
+signature. We then present a detailed proof of Sylvester's
+Law of Inertia using elementary tools from linear algebra,
+followed by its canonical form and applications in
+mathematical statistics and theoretical physics.
+We conclude with a brief historical account of James
+Joseph Sylvester and the development of the theorem.
+
+\section{Prerequisites}
+
+This note is intended for students and researchers
+who have
+completed a first course in linear algebra. Readers are
+expected to be well versed in eigenvalues and eigenvectors,
+eigendecomposition, the spectral theorem for real symmetric
+matrices, and the theory of quadratic forms.
+
+Familiarity with changes of basis, orthonormal bases,
+matrix rank, null spaces, and the rank-nullity theorem
+is also assumed. In particular, the reader should
+understand why real symmetric matrices admit orthonormal
+eigenbases and how a quadratic form can be represented
+by a symmetric matrix.
+
+Although these concepts form the mathematical foundation
+of our discussion, the essential ideas will be briefly
+revisited whenever necessary. No knowledge of Sylvester's
+Law of Inertia or the theory of matrix congruence is
+assumed.
+
+\section{Quadratic Forms and Changes of Basis}
+
+Before introducing matrix congruence, we briefly recall
+the notion of a quadratic form and examine how its
+matrix representation changes under a change of basis.
+
+\subsection{Quadratic Forms}
+
+A quadratic form on $\mathbb{R}^n$ is a scalar-valued
+function of the form
+\[
+    q(x)=x^TAx,
+\]
+where $A\in\mathbb{R}^{n\times n}$ is a real symmetric
+matrix and $x\in\mathbb{R}^n$ is a column vector.
+
+For example, consider
+\[
+    q(x_1,x_2)=2x_1^2+2x_1x_2+3x_2^2.
+\]
+This quadratic form can be represented as
+\[
+    q(x)=
+    \begin{pmatrix}x_1&x_2\end{pmatrix}
+    \begin{pmatrix}
+        2&1\\
+        1&3
+    \end{pmatrix}
+    \begin{pmatrix}x_1\\x_2\end{pmatrix}.
+\]
+
+Notice that the coefficient of the mixed term
+$x_1x_2$ is distributed equally between the
+corresponding off-diagonal entries of the
+symmetric matrix.
+
+More generally, every quadratic form on
+$\mathbb{R}^n$ admits a unique symmetric
+matrix representation relative to a fixed basis.
+
+\subsection{Changing the Basis}
+
+Suppose that the quadratic form
+\[
+    q(x)=x^TAx
+\]
+is initially expressed in the standard basis
+of $\mathbb{R}^n$.
+
+Let
+\[
+    \mathcal{B}=\{v_1,v_2,\ldots,v_n\}
+\]
+be another basis, and define the change-of-basis
+matrix
+\[
+    S=\begin{pmatrix}v_1&v_2&\cdots&v_n\end{pmatrix}.
+\]
+
+Since the columns of $S$ form a basis,
+$S$ is invertible.
+
+If $y$ denotes the coordinate vector of $x$
+relative to the new basis $\mathcal{B}$, then
+\[
+    x=Sy.
+\]
+
+Substituting into the quadratic form gives
+\[
+\begin{aligned}
+    q(x)
+    &=x^TAx\\
+    &=(Sy)^TA(Sy)\\
+    &=y^TS^TASy.
+\end{aligned}
+\]
+
+Therefore, if we define
+\[
+    \boxed{B=S^TAS},
+\]
+and the quadratic form in the new coordinates becomes
+\[
+    q(Sy)=y^TBy.
+\]
+
+Thus, $A$ and $B$ represent the same quadratic
+form relative to two different bases.
+
+This motivates the following definition.
+
+\begin{definition}[Matrix Congruence]
+Two real symmetric matrices
+$A,B\in\mathbb{R}^{n\times n}$
+are said to be \emph{congruent} if there exists
+an invertible matrix $S$ such that
+\[
+    \boxed{B=S^TAS}.
+\]
+\end{definition}
+
+\begin{remark}
+A change of basis does not alter the quadratic
+form itself; it changes only its matrix
+representation. Moreover, the change-of-basis
+matrix need not be orthogonal. Any invertible
+matrix is permitted.
+\end{remark}
+
+\subsection{An Illustrative Example}
+
+Consider the quadratic form
+\[
+    q(x_1,x_2)=2x_1^2+2x_1x_2+3x_2^2,
+\]
+whose symmetric matrix representation is
+\[
+    A=
+    \begin{pmatrix}
+        2&1\\
+        1&3
+    \end{pmatrix}.
+\]
+
+Suppose we introduce a new basis
+\[
+    v_1=
+    \begin{pmatrix}1\\0\end{pmatrix},
+    \qquad
+    v_2=
+    \begin{pmatrix}1\\1\end{pmatrix}.
+\]
+
+The corresponding change-of-basis matrix is
+\[
+    S=
+    \begin{pmatrix}
+        1&1\\
+        0&1
+    \end{pmatrix}.
+\]
+
+The matrix of the quadratic form in the new
+basis is
+\[
+\begin{aligned}
+    B
+    &=S^TAS\\
+    &=
+    \begin{pmatrix}
+        1&0\\
+        1&1
+    \end{pmatrix}
+    \begin{pmatrix}
+        2&1\\
+        1&3
+    \end{pmatrix}
+    \begin{pmatrix}
+        1&1\\
+        0&1
+    \end{pmatrix}\\[6pt]
+    &=
+    \boxed{
+    \begin{pmatrix}
+        2&3\\
+        3&7
+    \end{pmatrix}}.
+\end{aligned}
+\]
+
+To verify this directly, observe that $x=Sy$
+implies
+\[
+    x_1=y_1+y_2,
+    \qquad
+    x_2=y_2.
+\]
+
+Substituting into the original quadratic form,
+\[
+\begin{aligned}
+    q(x)
+    &=2(y_1+y_2)^2
+      +2(y_1+y_2)y_2+3y_2^2\\
+    &=2y_1^2+6y_1y_2+7y_2^2\\
+    &=
+    \begin{pmatrix}y_1&y_2\end{pmatrix}
+     \boxed{
+    \begin{pmatrix}
+        2&3\\
+        3&7
+    \end{pmatrix}}.
+    \begin{pmatrix}y_1\\y_2\end{pmatrix}.
+\end{aligned}
+\]
+
+We have therefore obtained two different
+symmetric matrices representing exactly the
+same quadratic form in different coordinate
+systems.
+
+The important question is now the following:
+although congruence preserves the quadratic
+form, does it also preserve its eigenvalues?
+
+As we shall see in the next section, the
+answer is generally no. This distinction
+separates congruence from matrix similarity
+and ultimately leads to Sylvester's Law
+of Inertia.
+
+
+\section{Similarity Versus Congruence}
+
+Although similarity and congruence are both associated
+with changes of basis, they describe fundamentally
+different mathematical relationships. It is important
+to distinguish them before proceeding to Sylvester's
+Law of Inertia.
+
+\subsection{Similarity and Linear Operators}
+
+Two matrices $A,B\in\mathbb{R}^{n\times n}$ are
+said to be \emph{similar} if there exists an
+invertible matrix $S$ such that
+\[
+    B=S^{-1}AS.
+\]
+
+Similar matrices represent the same linear operator
+relative to different bases. More importantly,
+they have the same characteristic polynomial:
+\[
+\begin{aligned}
+\det(\lambda I-B)
+&=\det(\lambda I-S^{-1}AS)\\
+&=\det\bigl(S^{-1}(\lambda I-A)S\bigr)\\
+&=\det(\lambda I-A).
+\end{aligned}
+\]
+
+Consequently, similar matrices possess exactly
+the same set of eigenvalues, including their algebraic
+multiplicities. In particular, similarity preserves
+the trace, determinant, and rank.
+
+\subsection{Congruence and Quadratic Forms}
+
+Recall from the preceding section that two real
+symmetric matrices $A$ and $B$ are congruent if
+\[
+    B=S^TAS
+\]
+for some invertible matrix $S$.
+
+Unlike similarity, congruence concerns the matrix
+representation of a quadratic form rather than
+that of a linear operator, and it preserves the rank of a matrix, though,
+it does not, in general, preserve its eigenvalues.
+The following example illustrates this distinction.
+
+\begin{example}[Congruence Does Not Preserve Eigenvalues]
+
+Consider the two real symmetric matrices
+\[
+    A=
+    \begin{pmatrix}
+        1&0\\
+        0&-2
+    \end{pmatrix},
+    \qquad
+    B=
+    \begin{pmatrix}
+        4&0\\
+        0&-18
+    \end{pmatrix}.
+\]
+
+We first observe that the eigenvalues of $A$ are
+$1$ and $-2$, whereas those of $B$ are $4$ and
+$-18$. Since similar matrices must have identical
+eigenvalues, $A$ and $B$ cannot be similar.
+
+However, are these matrices congruent?
+
+To answer this question, recall that congruence
+requires the existence of an invertible matrix
+$S$ such that
+\[
+    B=S^TAS.
+\]
+
+Let us look for a diagonal matrix of the form
+\[
+    S=
+    \begin{pmatrix}
+        a&0\\
+        0&b
+    \end{pmatrix},
+    \qquad ab\neq 0.
+\]
+
+Then
+\[
+\begin{aligned}
+    S^TAS
+    &=
+    \begin{pmatrix}
+        a&0\\
+        0&b
+    \end{pmatrix}
+    \begin{pmatrix}
+        1&0\\
+        0&-2
+    \end{pmatrix}
+    \begin{pmatrix}
+        a&0\\
+        0&b
+    \end{pmatrix}\\
+    &=
+    \begin{pmatrix}
+        a^2&0\\
+        0&-2b^2
+    \end{pmatrix}.
+\end{aligned}
+\]
+
+For this matrix to equal $B$, we require
+\[
+    a^2=4,
+    \qquad
+    -2b^2=-18.
+\]
+
+One possible choice is $a=2$ and $b=3$.
+Therefore, taking
+\[
+    S=
+    \begin{pmatrix}
+        2&0\\
+        0&3
+    \end{pmatrix},
+\]
+we obtain
+\[
+    \boxed{S^TAS=B}.
+\]
+
+Furthermore,
+\[
+    \det(S)=6\neq 0,
+\]
+so $S$ is invertible. Hence, by the definition
+of matrix congruence, $A$ and $B$ are congruent.
+
+We have thus exhibited two matrices that are
+congruent but not similar.
+
+Interestingly, although their eigenvalues
+differ, both matrices possess exactly one
+positive and one negative eigenvalue.
+
+This observation anticipates Sylvester's
+Law of Inertia: congruence does not preserve
+the individual eigenvalues, but it does
+preserve the numbers of positive, negative,
+and zero eigenvalues.
+\end{example}
+
+
+
+\begin{remark}
+When $S$ is orthogonal, we have $S^{-1}=S^T$.
+In this special case, congruence and similarity
+take the same form:
+\[
+    S^TAS=S^{-1}AS.
+\]
+Consequently, orthogonal congruence preserves
+the eigenvalues. For general invertible matrices,
+however, this need not be true.
+\end{remark}
+
+\subsection{Why Rank Alone Is Not Enough}
+
+Since multiplication by an invertible matrix
+does not change rank, congruent matrices
+necessarily have the same rank:
+\[
+\begin{aligned}
+    \operatorname{rank}(S^TAS)
+    &=\operatorname{rank}(AS)\\
+    &=\operatorname{rank}(A).
+\end{aligned}
+\]
+
+But is equality of ranks sufficient to
+guarantee congruence?
+
+Consider
+\[
+    A=
+    \begin{pmatrix}
+        1&0\\
+        0&0
+    \end{pmatrix},
+    \qquad
+    B=
+    \begin{pmatrix}
+        -1&0\\
+        0&0
+    \end{pmatrix}.
+\]
+
+Both matrices have rank one. Nevertheless,
+they are not congruent.
+
+To see why, observe that
+\[
+    x^TAx=x_1^2\geq 0
+\]
+for every $x\in\mathbb{R}^2$, whereas
+\[
+    x^TBx=-x_1^2\leq 0.
+\]
+
+Indeed, the quadratic form associated with $B$
+takes strictly negative values, while the one
+associated with $A$ never does.
+
+If $B=S^TAS$ for some invertible $S$, then
+\[
+    x^TBx=(Sx)^TA(Sx)\geq 0
+\]
+for every $x$, contradicting the preceding
+observation.
+
+Therefore, equal rank is necessary but not
+sufficient for congruence.
+
+The obstruction in this example arises from
+the signs of the quadratic forms, or equivalently,
+from the signs of their eigenvalues.
+
+This motivates the central question of our note:
+\emph{What information about the eigenvalues
+of a real symmetric matrix remains invariant
+under congruence?}
+
+The answer leads naturally to the concept of
+\emph{inertia} and, ultimately, to Sylvester's
+Law of Inertia.
+
+\section{Inertia, Rank, Index, and Signature}
+
+In the preceding section, we observed that congruent
+matrices need not have identical eigenvalues. Nevertheless,
+the signs of their eigenvalues appear to carry important
+information about the underlying quadratic form.
+
+This observation motivates the concept of \emph{inertia},
+which plays a central role in the classification of real
+symmetric matrices.
+
+\subsection{Definition of Inertia}
+
+Let $A\in\mathbb{R}^{n\times n}$ be a real symmetric
+matrix. By the spectral theorem, all eigenvalues of $A$
+are real, and there exists an orthogonal matrix $Q$
+such that
+\[
+    Q^TAQ=
+    \operatorname{diag}(\lambda_1,\ldots,\lambda_n).
+\]
+
+We may arrange these eigenvalues so that the positive
+eigenvalues appear first, followed by the negative
+eigenvalues, and finally the zero eigenvalues.
+
+\begin{definition}[Inertia of a Symmetric Matrix]
+Let $n_+$, $n_-$, and $n_0$ denote the numbers of
+positive, negative, and zero eigenvalues of $A$,
+respectively, counted with their multiplicities.
+
+The \emph{inertia} of $A$ is the ordered triple
+\[
+    \boxed{\operatorname{In}(A)=(n_+,n_-,n_0)}.
+\]
+\end{definition}
+
+Since every eigenvalue belongs to exactly one of
+these three categories, we necessarily have
+\[
+    \boxed{n_++n_-+n_0=n}.
+\]
+
+The inertia therefore describes the distribution
+of eigenvalues according to their signs, rather
+than their actual numerical values.
+
+\subsection{Rank, Index, and Signature}
+
+Several important quantities can be expressed
+directly in terms of inertia.
+
+\begin{definition}[Rank, Index, and Signature]
+For a real symmetric matrix $A$, we define:
+
+\begin{enumerate}
+    \item The \emph{rank} $r$ is the number of
+    nonzero eigenvalues:
+    \[
+        r=n_++n_-.
+    \]
+
+    \item The \emph{index} $p$ is the number of
+    positive eigenvalues:
+    \[
+        p=n_+.
+    \]
+
+    \item The \emph{signature} $s$ is the number
+    of positive eigenvalues minus the number
+    of negative eigenvalues:
+    \[
+        s=n_+-n_-.
+    \]
+\end{enumerate}
+\end{definition}
+
+Here, the term \emph{index} refers specifically
+to the positive index of inertia. Some authors
+use different terminology, but we shall follow
+this convention throughout the note.
+
+Since
+\[
+    r=n_++n_-
+\]
+and $p=n_+$, the number of negative eigenvalues
+must be
+\[
+    n_-=r-p.
+\]
+
+Consequently, the signature becomes
+\[
+\begin{aligned}
+    s
+    &=n_+-n_-\\
+    &=p-(r-p)\\
+    &=2p-r.
+\end{aligned}
+\]
+
+Thus,
+\[
+    \boxed{s=2p-r}.
+\]
+
+Equivalently, if the rank and signature are known,
+we can recover the numbers of positive and negative
+eigenvalues:
+\[
+    \boxed{
+    n_+=\frac{r+s}{2},
+    \qquad
+    n_-=\frac{r-s}{2}
+    }.
+\]
+
+Furthermore, by the rank-nullity theorem,
+\[
+    n_0=n-r.
+\]
+
+We therefore obtain
+\[
+    \boxed{
+    \operatorname{In}(A)
+    =(p,r-p,n-r)
+    }.
+\]
+
+This shows that, for a symmetric matrix of fixed
+size, its rank and index completely determine its
+inertia. The signature is not an independent
+quantity.
+
+\subsection{An Illustrative Example}
+
+Consider the real symmetric matrix
+\[
+    A=
+    \begin{pmatrix}
+        5&0&0&0\\
+        0&2&0&0\\
+        0&0&-3&0\\
+        0&0&0&0
+    \end{pmatrix}.
+\]
+
+Since $A$ is already diagonal, its eigenvalues
+are immediately obtained:
+\[
+    \lambda_1=5,\qquad
+    \lambda_2=2,\qquad
+    \lambda_3=-3,\qquad
+    \lambda_4=0.
+\]
+
+There are two positive eigenvalues, one negative
+eigenvalue, and one zero eigenvalue. Hence,
+\[
+    \boxed{\operatorname{In}(A)=(2,1,1)}.
+\]
+
+The corresponding rank, index, and signature are
+\[
+\begin{aligned}
+    r&=2+1=3,\\
+    p&=2,\\
+    s&=2-1=1.
+\end{aligned}
+\]
+
+As expected, the identity $s=2p-r$ gives
+\[
+    s=2(2)-3=1.
+\]
+
+\subsection{Geometric Interpretation}
+
+The inertia of a symmetric matrix also describes
+important geometric properties of its associated
+quadratic form.
+
+To see this, suppose that
+\[
+    A=QDQ^T,
+\]
+where $Q$ is orthogonal and
+\[
+    D=\operatorname{diag}
+    (\lambda_1,\ldots,\lambda_n).
+\]
+
+Introducing the orthogonal coordinates
+$y=Q^Tx$, we obtain
+\[
+\begin{aligned}
+    q(x)
+    &=x^TAx\\
+    &=x^TQDQ^Tx\\
+    &=y^TDy\\
+    &=\sum_{i=1}^{n}\lambda_i y_i^2.
+\end{aligned}
+\]
+
+Thus, in an orthonormal eigenbasis, every
+quadratic form becomes a sum of squared
+coordinates weighted by its eigenvalues.
+
+Positive eigenvalues contribute positively
+to the quadratic form, negative eigenvalues
+contribute negatively, and zero eigenvalues
+make no contribution.
+
+For instance, the matrix in our previous
+example defines
+\[
+    q(x)=5x_1^2+2x_2^2-3x_3^2.
+\]
+
+The form is strictly positive for every
+nonzero vector in the subspace
+\[
+    \operatorname{span}\{e_1,e_2\},
+\]
+and strictly negative for every nonzero
+vector in
+\[
+    \operatorname{span}\{e_3\}.
+\]
+
+Moreover, the vector $e_4$ belongs to the
+null space of $A$, so
+\[
+    Ae_4=0.
+\]
+
+These subspaces have dimensions two, one,
+and one, respectively, precisely matching
+the inertia $(2,1,1)$.
+
+\begin{remark}
+A vector satisfying $q(x)=0$ need not belong
+to the null space of $A$. For example, if
+$A=\operatorname{diag}(1,-1)$, then
+$q(1,1)=0$, although $A(1,1)^T\neq 0$.
+The zero component of inertia counts zero
+eigenvalues, or equivalently, the dimension
+of $\ker(A)$.
+\end{remark}
+
+We are now ready to formulate the central result of
+this note: Sylvester's Law of Inertia. Recall that
+the inertia of a real symmetric matrix is the ordered
+triple $(n_+,n_-,n_0)$, recording the numbers of
+positive, negative, and zero eigenvalues, respectively.
+Sylvester's Law of Inertia asserts that these three
+numbers remain unchanged under congruence, even
+though the eigenvalues themselves may change.
+
+More remarkably, the converse is also true: two
+real symmetric matrices of the same size are
+congruent if they have identical inertia.
+Thus, inertia provides a complete classification
+of real symmetric matrices under congruence.
+We shall prove both directions of this remarkable
+result in the next section.
+
+% --------------------------------------------------
+% Sylvester's Law of Inertia
+% --------------------------------------------------
+
+\section{Sylvester's Law of Inertia: Statement and Proof}
+
+As discussed in the preceding
+sections, congruence does not generally preserve
+the individual eigenvalues of a symmetric matrix.
+Nevertheless, it preserves the numbers of positive,
+negative, and zero eigenvalues. Sylvester's Law of Inertia states that these numbers
+completely characterize the congruence classes of
+real symmetric matrices.
+
+\subsection{Statement of the Theorem}
+
+\begin{theorem}[Sylvester's Law of Inertia]
+Let $B,C\in\mathbb{R}^{n\times n}$ be real symmetric
+matrices. Then $B$ and $C$ are congruent if and
+only if they have the same inertia.
+
+Equivalently,
+\[
+    \boxed{
+    B\text{ and }C\text{ are congruent}
+    \iff
+    \operatorname{In}(B)=\operatorname{In}(C).
+    }
+\]
+
+That is, there exists an invertible matrix $S$
+satisfying
+\[
+    C=S^TBS
+\]
+if and only if $B$ and $C$ have the same numbers
+of positive, negative, and zero eigenvalues,
+counting multiplicities.
+\end{theorem}
+
+We will prove the theorem in two directions.
+
+First, assuming that $B$ and $C$ are congruent,
+we will prove that their inertia must agree.
+This is the more challenging direction, and
+our proof will rely on the spectral theorem,
+orthonormal eigenbases, and a carefully
+constructed linear transformation.
+
+We will then establish the converse by showing
+that two symmetric matrices with the same
+inertia can be transformed into the same
+diagonal matrix through congruence.
+
+% --------------------------------------------------
+% First Direction
+% --------------------------------------------------
+
+\subsection{Congruence Implies Equal Inertia}
+
+\begin{proof}[Proof of the Forward Implication]
+
+
+\textbf{Step 1. Establish equality of ranks.}
+
+Suppose that $B$ and $C$ are congruent.
+By definition, there exists an invertible
+matrix $S$ such that
+\[
+    \boxed{C=S^TBS}.
+\]
+
+Since $S$ is invertible, so is $S^T$.
+Multiplication by an invertible matrix
+does not change rank. Therefore,
+\[
+\begin{aligned}
+    \operatorname{rank}(C)
+    &=\operatorname{rank}(S^TBS)\\
+    &=\operatorname{rank}(BS)\\
+    &=\operatorname{rank}(B).
+\end{aligned}
+\]
+
+Let their common rank be $r$. Thus,
+\[
+    \boxed{
+    \operatorname{rank}(B)
+    =\operatorname{rank}(C)=r.
+    }
+\]
+
+Because both matrices are $n\times n$,
+they also have the same nullity:
+\[
+    \dim\ker(B)=\dim\ker(C)=n-r.
+\]
+
+Consequently, $B$ and $C$ have the same
+number of zero eigenvalues.
+
+Our remaining task is to prove that they
+have the same numbers of positive and
+negative eigenvalues.
+
+\medskip
+
+\textbf{Step 2. Assume that the indices differ.}
+
+Let $p$ denote the number of positive
+eigenvalues of $B$, and let $q$ denote
+the number of positive eigenvalues of $C$.
+
+Suppose, for contradiction, that
+\[
+    p\neq q.
+\]
+
+Since the roles of $B$ and $C$ can be
+interchanged, we may assume without
+loss of generality that
+\[
+    \boxed{p<q}.
+\]
+
+Indeed, congruence is symmetric: if
+$C=S^TBS$, then
+\[
+    B=S^{-T}CS^{-1}.
+\]
+
+Since both matrices have rank $r$,
+the number of negative eigenvalues of
+$B$ is $r-p$, whereas that of $C$
+is $r-q$.
+
+Our assumption $p<q$ therefore implies
+\[
+    r-p>r-q.
+\]
+
+Thus, under our assumption, $B$ has
+fewer positive eigenvalues but more
+negative eigenvalues than $C$.
+
+We shall show that this is impossible
+if the matrices are congruent.
+
+\medskip
+
+\textbf{Step 3. Choose orthonormal eigenbases.}
+
+Since $B$ is real symmetric, the spectral
+theorem guarantees the existence of an
+orthonormal eigenbasis
+\[
+    \{v_1,v_2,\ldots,v_n\}
+\]
+such that
+\[
+    Bv_i=a_iv_i,
+\]
+where $a_i$ is the eigenvalue corresponding
+to $v_i$.
+
+We arrange the eigenvectors according to
+the signs of their eigenvalues:
+\[
+\begin{cases}
+    a_i>0, &1\leq i\leq p,\\
+    a_i<0, &p+1\leq i\leq r,\\
+    a_i=0, &r+1\leq i\leq n.
+\end{cases}
+\]
+
+Likewise, since $C$ is real symmetric,
+there exists an orthonormal eigenbasis
+\[
+    \{w_1,w_2,\ldots,w_n\}
+\]
+such that
+\[
+    Cw_i=e_iw_i,
+\]
+where
+\[
+\begin{cases}
+    e_i>0, &1\leq i\leq q,\\
+    e_i<0, &q+1\leq i\leq r,\\
+    e_i=0, &r+1\leq i\leq n.
+\end{cases}
+\]
+
+In particular,
+\[
+    \ker(B)
+    =\operatorname{span}
+    \{v_{r+1},\ldots,v_n\},
+\]
+and
+\[
+    \ker(C)
+    =\operatorname{span}
+    \{w_{r+1},\ldots,w_n\}.
+\]
+
+These relations follow because the
+eigenvectors corresponding to zero
+eigenvalues form an orthonormal basis
+for the null space of a symmetric matrix.
+
+Before proceeding, recall an important
+consequence of congruence.
+
+Since
+\[
+    C=S^TBS,
+\]
+for any $x\in\mathbb{R}^n$, define
+\[
+    y=S^{-1}x.
+\]
+
+Then $x=Sy$, and hence
+\[
+\begin{aligned}
+    y^TCy
+    &=y^TS^TBSy\\
+    &=(Sy)^TB(Sy)\\
+    &=x^TBx.
+\end{aligned}
+\]
+
+Therefore,
+\[
+    \boxed{x^TBx=y^TCy,\qquad x=Sy.}
+\]
+
+This equality expresses the fact that
+congruent matrices represent the same
+quadratic form in different coordinates.
+
+Notice that we must compare $x^TBx$
+with $y^TCy$, where $x=Sy$, rather
+than automatically using identical
+coordinate vectors for both forms.
+
+\medskip
+
+\textbf{Step 4. Construct a linear transformation.}
+
+We now introduce the central construction
+of the proof.
+
+Define the linear transformation
+\[
+    L:\mathbb{R}^n
+    \longrightarrow
+    \mathbb{R}^{p+(r-q)}
+\]
+by
+\[
+    \boxed{
+    L(x)=
+    \begin{pmatrix}
+        v_1^TBx\\
+        \vdots\\
+        v_p^TBx\\
+        w_{q+1}^TCS^{-1}x\\
+        \vdots\\
+        w_r^TCS^{-1}x
+    \end{pmatrix}.
+    }
+\]
+
+
+Let us examine this construction carefully.
+
+The first $p$ components correspond to
+the eigenvectors associated with the
+positive eigenvalues of $B$.
+
+The remaining $r-q$ components correspond
+to the eigenvectors associated with the
+negative eigenvalues of $C$.
+
+Every component is linear in $x$.
+Therefore, $L$ is a linear transformation.
+
+Our objective is to find a vector
+$x_0$ satisfying
+\[
+    L(x_0)=0,
+\]
+while ensuring that
+\[
+    Bx_0\neq 0.
+\]
+
+Such a vector will allow us to eliminate
+the positive-eigenvalue contributions
+of $B$ and the negative-eigenvalue
+contributions of $C$.
+
+The existence of this vector is guaranteed
+by the rank-nullity theorem.
+
+\medskip
+
+\textbf{Step 5. Apply the rank-nullity theorem.}
+
+Since
+\[
+    L:\mathbb{R}^n
+    \longrightarrow
+    \mathbb{R}^{p+(r-q)},
+\]
+we necessarily have
+\[
+    \operatorname{rank}(L)\leq p+(r-q).
+\]
+
+By the rank-nullity theorem,
+\[
+    \dim\ker(L)
+    +\operatorname{rank}(L)=n.
+\]
+
+Consequently,
+\[
+\begin{aligned}
+    \dim\ker(L)
+    &=n-\operatorname{rank}(L)\\
+    &\geq n-\bigl(p+r-q\bigr)\\
+    &=n-r+(q-p).
+\end{aligned}
+\]
+
+But our assumption was $p<q$.
+Therefore,
+\[
+    q-p>0.
+\]
+
+Hence,
+\[
+    \boxed{\dim\ker(L)>n-r}.
+\]
+
+Recall, however, that
+\[
+    \dim\ker(B)=n-r.
+\]
+
+Thus,
+\[
+    \boxed{
+    \dim\ker(L)>\dim\ker(B).
+    }
+\]
+
+This inequality is the key observation.
+
+A vector space of dimension greater
+than $n-r$ cannot be contained entirely
+in a vector space of dimension $n-r$.
+
+Therefore, $\ker(L)$ cannot be contained
+in $\ker(B)$.
+
+Consequently, there exists a vector
+$x_0\in\mathbb{R}^n$ such that
+\[
+    \boxed{
+    x_0\in\ker(L),
+    \qquad
+    x_0\notin\ker(B).
+    }
+\]
+
+Equivalently,
+\[
+    \boxed{
+    L(x_0)=0,
+    \qquad
+    Bx_0\neq 0.
+    }
+\]
+
+Now define
+\[
+    \boxed{y_0=S^{-1}x_0}.
+\]
+
+Since $C=S^TBS$, we obtain
+\[
+\begin{aligned}
+    Cy_0
+    &=CS^{-1}x_0\\
+    &=S^TBS S^{-1}x_0\\
+    &=S^TBx_0.
+\end{aligned}
+\]
+
+Because $S^T$ is invertible and
+$Bx_0\neq 0$, we conclude that
+\[
+    \boxed{Cy_0\neq 0}.
+\]
+
+We have therefore constructed two
+corresponding coordinate vectors,
+$x_0$ and $y_0=S^{-1}x_0$, satisfying
+\[
+    L(x_0)=0,
+    \qquad
+    Bx_0\neq 0,
+    \qquad
+    Cy_0\neq 0.
+\]
+
+We shall now study the quadratic form
+in these two coordinate systems.
+
+\medskip
+
+\textbf{Step 6. Express $x_0$ in the eigenbasis of $B$.}
+
+Since $\{v_1,\ldots,v_n\}$ is an
+orthonormal basis for $\mathbb{R}^n$,
+we may write
+\[
+    x_0=\sum_{i=1}^{n}c_iv_i.
+\]
+
+Recall that $L(x_0)=0$.
+
+By the definition of $L$, its first
+$p$ components must vanish:
+\[
+    v_k^TBx_0=0,
+    \qquad 1\leq k\leq p.
+\]
+
+Substituting the expansion of $x_0$,
+we obtain
+\[
+\begin{aligned}
+    0
+    &=v_k^TBx_0\\
+    &=v_k^TB
+      \left(\sum_{i=1}^{n}c_iv_i\right)\\
+    &=\sum_{i=1}^{n}c_iv_k^TBv_i.
+\end{aligned}
+\]
+
+Since $Bv_i=a_iv_i$,
+\[
+    0=\sum_{i=1}^{n}c_ia_iv_k^Tv_i.
+\]
+
+But the eigenvectors form an
+orthonormal basis, so
+\[
+    v_k^Tv_i=\delta_{ki},
+\]
+where $\delta_{ki}$ denotes the
+Kronecker delta.
+
+Therefore, all terms vanish except
+the term corresponding to $i=k$.
+We obtain
+\[
+    \boxed{c_ka_k=0}.
+\]
+
+Since $a_k>0$ for $1\leq k\leq p$,
+we must have
+\[
+    \boxed{c_k=0,\qquad 1\leq k\leq p}.
+\]
+
+Thus,
+\[
+    \boxed{
+    x_0=\sum_{i=p+1}^{n}c_iv_i.
+    }
+\]
+
+This is precisely what we intended:
+the vector $x_0$ has no components
+in the positive-eigenvalue directions
+of $B$.
+
+Furthermore, because $Bx_0\neq 0$,
+at least one coefficient $c_i$ with
+$p+1\leq i\leq r$ must be nonzero.
+
+Indeed,
+\[
+    Bx_0=\sum_{i=p+1}^{r}c_ia_iv_i,
+\]
+and this expression cannot vanish
+unless all coefficients in the indicated
+range are zero.
+
+\medskip
+
+\textbf{Step 7. Show that $x_0^TBx_0<0$.}
+
+Using the expansion obtained above,
+we compute
+\[
+\begin{aligned}
+    x_0^TBx_0
+    &=
+    \left(\sum_{i=p+1}^{n}c_iv_i\right)^T
+    B\left(\sum_{j=p+1}^{n}c_jv_j\right)\\
+    &=
+    \sum_{i=p+1}^{n}
+    \sum_{j=p+1}^{n}
+    c_ic_jv_i^TBv_j.
+\end{aligned}
+\]
+
+Since $Bv_j=a_jv_j$,
+\[
+    x_0^TBx_0
+    =
+    \sum_{i=p+1}^{n}
+    \sum_{j=p+1}^{n}
+    c_ic_ja_jv_i^Tv_j.
+\]
+
+By orthonormality, $v_i^Tv_j=\delta_{ij}$.
+Therefore,
+\[
+    x_0^TBx_0
+    =\sum_{i=p+1}^{n}a_ic_i^2.
+\]
+
+Since $a_i=0$ for $i>r$, this reduces to
+\[
+    \boxed{
+    x_0^TBx_0
+    =\sum_{i=p+1}^{r}a_ic_i^2.
+    }
+\]
+
+Now observe that
+\[
+    a_i<0,
+    \qquad p+1\leq i\leq r.
+\]
+
+Also, at least one coefficient
+$c_i$ in this range is nonzero,
+because $Bx_0\neq 0$.
+
+Consequently, every summand is
+nonpositive, and at least one
+summand is strictly negative.
+
+Hence,
+\[
+    \boxed{x_0^TBx_0<0}.
+    \tag{1}
+\]
+
+Thus, the quadratic form represented
+by $B$ takes a strictly negative
+value at $x_0$.
+
+\medskip
+
+\textbf{Step 8. Express $y_0$ in the eigenbasis of $C$.}
+
+Recall that
+\[
+    y_0=S^{-1}x_0.
+\]
+
+Since $\{w_1,\ldots,w_n\}$ is an
+orthonormal eigenbasis for $C$,
+we may write
+\[
+    y_0=\sum_{i=1}^{n}d_iw_i.
+\]
+
+Again, since $L(x_0)=0$, the last
+$r-q$ components of $L(x_0)$ vanish:
+\[
+    w_k^TCS^{-1}x_0=0,
+    \qquad q+1\leq k\leq r.
+\]
+
+Since $y_0=S^{-1}x_0$, this becomes
+\[
+    w_k^TCy_0=0.
+\]
+
+Substituting the expansion of $y_0$,
+we obtain
+\[
+\begin{aligned}
+    0
+    &=w_k^TCy_0\\
+    &=w_k^TC
+      \left(\sum_{i=1}^{n}d_iw_i\right)\\
+    &=\sum_{i=1}^{n}d_iw_k^TCw_i.
+\end{aligned}
+\]
+
+Since $Cw_i=e_iw_i$,
+\[
+    0=\sum_{i=1}^{n}d_ie_iw_k^Tw_i.
+\]
+
+By orthonormality,
+\[
+    w_k^Tw_i=\delta_{ki}.
+\]
+
+Therefore,
+\[
+    \boxed{d_ke_k=0}.
+\]
+
+But
+\[
+    e_k<0,
+    \qquad q+1\leq k\leq r.
+\]
+
+Hence,
+\[
+    \boxed{
+    d_k=0,\qquad q+1\leq k\leq r.
+    }
+\]
+
+Consequently,
+\[
+    \boxed{
+    y_0=
+    \sum_{i=1}^{q}d_iw_i
+    +
+    \sum_{i=r+1}^{n}d_iw_i.
+    }
+\]
+
+Thus, $y_0$ has no components in
+the negative-eigenvalue directions
+of $C$.
+
+Furthermore, since $Cy_0\neq 0$,
+at least one coefficient $d_i$
+with $1\leq i\leq q$ must be nonzero.
+
+\medskip
+
+\textbf{Step 9. Show that $y_0^TCy_0>0$.}
+
+Using the orthonormal expansion,
+we have
+\[
+\begin{aligned}
+    y_0^TCy_0
+    &=
+    \left(\sum_{i=1}^{n}d_iw_i\right)^T
+    C\left(\sum_{j=1}^{n}d_jw_j\right)\\
+    &=
+    \sum_{i=1}^{n}
+    \sum_{j=1}^{n}
+    d_id_jw_i^TCw_j\\
+    &=
+    \sum_{i=1}^{n}
+    \sum_{j=1}^{n}
+    d_id_je_jw_i^Tw_j\\
+    &=
+    \sum_{i=1}^{n}e_id_i^2.
+\end{aligned}
+\]
+
+But we already established that
+\[
+    d_i=0,\qquad q+1\leq i\leq r,
+\]
+and
+\[
+    e_i=0,\qquad r+1\leq i\leq n.
+\]
+
+Hence,
+\[
+    \boxed{
+    y_0^TCy_0
+    =\sum_{i=1}^{q}e_id_i^2.
+    }
+\]
+
+For every index in this sum,
+\[
+    e_i>0.
+\]
+
+Moreover, at least one coefficient
+$d_i$ with $1\leq i\leq q$ is
+nonzero, because $Cy_0\neq 0$.
+
+Therefore, every summand is
+nonnegative, and at least one
+is strictly positive.
+
+We conclude that
+\[
+    \boxed{y_0^TCy_0>0}.
+    \tag{2}
+\]
+
+Thus, the quadratic form represented
+by $C$ takes a strictly positive
+value at $y_0$.
+
+\medskip
+
+\textbf{Step 10. Obtain the contradiction.}
+
+Recall that
+\[
+    C=S^TBS
+\]
+and
+\[
+    x_0=Sy_0.
+\]
+
+Consequently,
+\[
+\begin{aligned}
+    y_0^TCy_0
+    &=y_0^TS^TBSy_0\\
+    &=(Sy_0)^TB(Sy_0)\\
+    &=x_0^TBx_0.
+\end{aligned}
+\]
+
+Therefore,
+\[
+    \boxed{y_0^TCy_0=x_0^TBx_0}.
+\]
+
+However, equations (1) and (2)
+established that
+\[
+    x_0^TBx_0<0
+\]
+while
+\[
+    y_0^TCy_0>0.
+\]
+
+Combining these results,
+we obtain
+\[
+    0<y_0^TCy_0=x_0^TBx_0<0,
+\]
+which is impossible.
+
+We have therefore reached a contradiction.
+
+Hence, our assumption that the indices
+of $B$ and $C$ differ must be false.
+It follows that
+\[
+    \boxed{p=q}.
+\]
+
+We already established that the
+matrices have the same rank $r$.
+Consequently, they have the same
+number of negative eigenvalues:
+\[
+    r-p=r-q.
+\]
+
+They also have the same number
+of zero eigenvalues:
+\[
+    n-r.
+\]
+
+Thus, the numbers of positive,
+negative, and zero eigenvalues
+are identical for both matrices.
+
+Therefore,
+\[
+    \boxed{
+    \operatorname{In}(B)=\operatorname{In}(C).
+    }
+\]
+
+This completes the proof that
+congruence implies equality of inertia.
+
+\end{proof}
+
+% --------------------------------------------------
+% Second Direction
+% --------------------------------------------------
+
+\subsection{Equal Inertia Implies Congruence}
+
+We now establish the converse of the theorem.
+
+Suppose that two real symmetric matrices
+have the same inertia. We must show
+that there exists an invertible matrix
+relating them through congruence.
+
+The central idea is that every real symmetric
+matrix can be transformed, by congruence,
+into a diagonal matrix whose entries
+belong to $\{1,-1,0\}$.
+
+\begin{proof}[Proof of the Converse Implication]
+
+\textbf{Step 1. Assume equality of inertia.}
+
+Let $B,C\in\mathbb{R}^{n\times n}$ be
+real symmetric matrices satisfying
+\[
+    \operatorname{In}(B)
+    =\operatorname{In}(C).
+\]
+
+Suppose their common inertia is
+\[
+    (p,r-p,n-r).
+\]
+
+Thus, each matrix has $p$ positive
+eigenvalues, $r-p$ negative eigenvalues,
+and $n-r$ zero eigenvalues.
+
+Our objective is to construct an invertible
+matrix $S$ such that
+\[
+    C=S^TBS.
+\]
+
+\medskip
+
+\textbf{Step 2. Diagonalize the matrix $B$.}
+
+By the spectral theorem, there exists
+an orthogonal matrix $U$ such that
+\[
+    U^TBU=
+    \operatorname{diag}
+    (a_1,\ldots,a_n),
+\]
+where the eigenvalues are ordered
+according to their signs:
+\[
+\begin{cases}
+    a_i>0, &1\leq i\leq p,\\
+    a_i<0, &p+1\leq i\leq r,\\
+    a_i=0, &r+1\leq i\leq n.
+\end{cases}
+\]
+
+We now introduce an invertible diagonal
+matrix that will normalize the nonzero
+eigenvalues of $B$.
+
+Define
+\[
+    D_B=
+    \operatorname{diag}
+    \left(
+    \frac{1}{\sqrt{|a_1|}},
+    \ldots,
+    \frac{1}{\sqrt{|a_r|}},
+    1,\ldots,1
+    \right).
+\]
+
+The entries corresponding to zero
+eigenvalues are chosen to be $1$,
+rather than attempting to divide
+by zero.
+
+Since every diagonal entry of $D_B$
+is nonzero, $D_B$ is invertible.
+
+Now observe that
+\[
+\begin{aligned}
+    D_B^TU^TBUD_B
+    &=
+    D_B^T
+    \operatorname{diag}(a_1,\ldots,a_n)
+    D_B\\
+    &=
+    \operatorname{diag}
+    \left(
+    \frac{a_1}{|a_1|},
+    \ldots,
+    \frac{a_r}{|a_r|},
+    0,\ldots,0
+    \right).
+\end{aligned}
+\]
+
+But
+\[
+    \frac{a_i}{|a_i|}
+    =
+    \begin{cases}
+        1, &a_i>0,\\
+        -1, &a_i<0.
+    \end{cases}
+\]
+
+Therefore,
+\[
+    D_B^TU^TBUD_B
+    =
+    \begin{pmatrix}
+        I_p&0&0\\
+        0&-I_{r-p}&0\\
+        0&0&0_{n-r}
+    \end{pmatrix}.
+\]
+
+Let
+\[
+    P=UD_B.
+\]
+
+Since both $U$ and $D_B$ are
+invertible, $P$ is invertible.
+
+Thus,
+\[
+    \boxed{
+    P^TBP=J_{r,p},
+    }
+\]
+where
+\[
+    \boxed{
+    J_{r,p}=
+    \begin{pmatrix}
+        I_p&0&0\\
+        0&-I_{r-p}&0\\
+        0&0&0_{n-r}
+    \end{pmatrix}.
+    }
+\]
+
+\medskip
+
+\textbf{Step 3. Apply the same construction to $C$.}
+
+Since $C$ is also real symmetric,
+there exists an orthogonal matrix $V$
+such that
+\[
+    V^TCV
+    =\operatorname{diag}(e_1,\ldots,e_n).
+\]
+
+Because $B$ and $C$ have the same
+inertia, we may order the eigenvalues
+of $C$ so that
+\[
+\begin{cases}
+    e_i>0, &1\leq i\leq p,\\
+    e_i<0, &p+1\leq i\leq r,\\
+    e_i=0, &r+1\leq i\leq n.
+\end{cases}
+\]
+
+Define
+\[
+    D_C=
+    \operatorname{diag}
+    \left(
+    \frac{1}{\sqrt{|e_1|}},
+    \ldots,
+    \frac{1}{\sqrt{|e_r|}},
+    1,\ldots,1
+    \right).
+\]
+
+As before, $D_C$ is invertible.
+
+Setting
+\[
+    Q=VD_C,
+\]
+we obtain
+\[
+    \boxed{
+    Q^TCQ=J_{r,p}.
+    }
+\]
+
+Therefore, both matrices are congruent
+to the same diagonal matrix:
+\[
+    \boxed{
+    P^TBP=Q^TCQ=J_{r,p}.
+    }
+\]
+
+\medskip
+
+\textbf{Step 4. Construct the required congruence matrix.}
+
+From the preceding equality,
+\[
+    P^TBP=Q^TCQ.
+\]
+
+Multiplying on the left by $Q^{-T}$
+and on the right by $Q^{-1}$, we obtain
+\[
+    Q^{-T}P^TBPQ^{-1}=C.
+\]
+
+Rearranging the factors,
+\[
+    C=(PQ^{-1})^TB(PQ^{-1}).
+\]
+
+Define
+\[
+    \boxed{S=PQ^{-1}}.
+\]
+
+Since both $P$ and $Q$ are invertible,
+the matrix $S$ is also invertible.
+
+Consequently,
+\[
+    \boxed{C=S^TBS}.
+\]
+
+Thus, $B$ and $C$ are congruent.
+
+This completes the proof that equality
+of inertia implies congruence.
+
+\end{proof}
+
+% --------------------------------------------------
+% Conclusion
+% --------------------------------------------------
+
+\subsection{Conclusion of the Proof}
+
+We have now established both directions
+of Sylvester's Law of Inertia.
+
+First, we proved that congruent real
+symmetric matrices necessarily have
+the same inertia.
+
+Conversely, we demonstrated that two
+real symmetric matrices having the same
+inertia can each be transformed into
+the same canonical diagonal matrix,
+and are therefore congruent.
+
+Hence,
+\[
+    \boxed{
+    B\text{ and }C\text{ are congruent}
+    \iff
+    \operatorname{In}(B)=\operatorname{In}(C).
+    }
+\]
+
+% --------------------------------------------------
+% Applications in Mathematical Statistics
+% --------------------------------------------------
+
+\section{Applications in Mathematical Statistics}
+
+Sylvester's Law of Inertia has important applications
+in mathematical statistics, where symmetric matrices
+arise naturally in the study of covariance,
+multivariate distributions, parameter estimation,
+and optimization.
+
+In this section, we illustrate several connections
+between matrix congruence and statistical theory.
+
+\subsection{Covariance Matrices and Linear Transformations}
+
+Let $X$ be an $n$-dimensional random vector with
+mean vector $\mu=\mathbb{E}[X]$ and covariance matrix
+\[
+    \Sigma_X
+    =\mathbb{E}\left[
+    (X-\mu)(X-\mu)^T
+    \right],
+\]
+assuming the required second moments exist.
+
+Recall that every covariance matrix is symmetric
+and positive semidefinite. Indeed, for any vector
+$v\in\mathbb{R}^n$,
+\[
+\begin{aligned}
+    v^T\Sigma_Xv
+    &=\mathbb{E}\left[
+      v^T(X-\mu)(X-\mu)^Tv
+      \right]\\
+    &=\mathbb{E}\left[
+      \bigl(v^T(X-\mu)\bigr)^2
+      \right]\\
+    &\geq 0.
+\end{aligned}
+\]
+
+Consequently, all eigenvalues of $\Sigma_X$
+are nonnegative.
+
+Now suppose we introduce a new random vector
+through an invertible linear transformation
+\[
+    Y=S^TX,
+\]
+where $S\in\mathbb{R}^{n\times n}$ is invertible.
+
+The mean of $Y$ is
+\[
+    \mu_Y=S^T\mu.
+\]
+
+Therefore, its covariance matrix is
+\[
+\begin{aligned}
+    \Sigma_Y
+    &=\mathbb{E}\left[
+      (Y-\mu_Y)(Y-\mu_Y)^T
+      \right]\\
+    &=\mathbb{E}\left[
+      S^T(X-\mu)(X-\mu)^TS
+      \right]\\
+    &=S^T\mathbb{E}\left[
+      (X-\mu)(X-\mu)^T
+      \right]S.
+\end{aligned}
+\]
+
+Hence,
+\[
+    \boxed{\Sigma_Y=S^T\Sigma_XS}.
+\]
+
+This is precisely a congruence transformation.
+
+By Sylvester's Law of Inertia,
+\[
+    \boxed{
+    \operatorname{In}(\Sigma_Y)
+    =\operatorname{In}(\Sigma_X).
+    }
+\]
+
+Since covariance matrices are positive
+semidefinite, they have no negative eigenvalues.
+Thus, if $\operatorname{rank}(\Sigma_X)=r$,
+then
+\[
+    \operatorname{In}(\Sigma_X)=(r,0,n-r).
+\]
+
+The transformed covariance matrix has
+the same inertia:
+\[
+    \operatorname{In}(\Sigma_Y)=(r,0,n-r).
+\]
+
+Therefore, an invertible linear transformation
+may change the individual variances,
+covariances, and eigenvalues, but it cannot
+change the rank of the covariance matrix
+or the number of its zero eigenvalues.
+
+\begin{example}[A Singular Covariance Matrix]
+
+Consider the covariance matrix
+\[
+    \Sigma_X=
+    \begin{pmatrix}
+        1&1\\
+        1&1
+    \end{pmatrix}.
+\]
+
+Its eigenvalues are $2$ and $0$, so
+\[
+    \operatorname{In}(\Sigma_X)=(1,0,1).
+\]
+
+This covariance structure corresponds to
+two random variables having identical
+centered values almost surely.
+
+Now choose the invertible matrix
+\[
+    S=
+    \begin{pmatrix}
+        1&1\\
+        0&1
+    \end{pmatrix}.
+\]
+
+Under the transformation $Y=S^TX$,
+the covariance matrix becomes
+\[
+\begin{aligned}
+    \Sigma_Y
+    &=S^T\Sigma_XS\\
+    &=
+    \begin{pmatrix}
+        1&0\\
+        1&1
+    \end{pmatrix}
+    \begin{pmatrix}
+        1&1\\
+        1&1
+    \end{pmatrix}
+    \begin{pmatrix}
+        1&1\\
+        0&1
+    \end{pmatrix}\\
+    &=
+    \begin{pmatrix}
+        1&2\\
+        2&4
+    \end{pmatrix}.
+\end{aligned}
+\]
+
+The eigenvalues of $\Sigma_Y$ are $5$ and $0$.
+
+Although the nonzero eigenvalue has changed,
+the inertia remains
+\[
+    \boxed{
+    \operatorname{In}(\Sigma_Y)
+    =\operatorname{In}(\Sigma_X)
+    =(1,0,1).
+    }
+\]
+
+Thus, the covariance matrices are congruent
+but have different eigenvalues, exactly as
+predicted by Sylvester's Law of Inertia.
+
+\end{example}
+
+\begin{remark}
+In statistical applications, the rank of
+a covariance matrix represents the number
+of linearly independent directions having
+nonzero variance.
+
+An invertible change of coordinates cannot
+create or eliminate such directions.
+It can only change how they are represented.
+\end{remark}
+
+
+\subsection{Whitening and Mahalanobis Distance}
+
+Another important application of congruence
+appears in the whitening of multivariate data.
+
+Suppose that a random vector $X$ has a
+positive definite covariance matrix $\Sigma$.
+By the spectral theorem,
+\[
+    \Sigma=Q\Lambda Q^T,
+\]
+where all diagonal entries of $\Lambda$
+are strictly positive.
+
+We may therefore define
+\[
+    \Sigma^{-1/2}
+    =Q\Lambda^{-1/2}Q^T.
+\]
+
+Consider the transformed random vector
+\[
+    Y=\Sigma^{-1/2}(X-\mu).
+\]
+
+Its covariance matrix is
+\[
+\begin{aligned}
+    \operatorname{Cov}(Y)
+    &=\Sigma^{-1/2}\Sigma\Sigma^{-1/2}\\
+    &=I.
+\end{aligned}
+\]
+
+Hence,
+\[
+    \boxed{\operatorname{Cov}(Y)=I}.
+\]
+
+This transformation is called
+\emph{whitening}. It transforms the covariance
+matrix into the identity matrix.
+
+For example, if
+\[
+    \Sigma=
+    \begin{pmatrix}
+        4&0\\
+        0&9
+    \end{pmatrix},
+\]
+then
+\[
+    S=
+    \begin{pmatrix}
+        \frac12&0\\
+        0&\frac13
+    \end{pmatrix}
+\]
+satisfies
+\[
+    \boxed{S^T\Sigma S=I}.
+\]
+
+Notice that the eigenvalues have changed
+from $4$ and $9$ to $1$ and $1$.
+Nevertheless, both matrices have inertia
+$(2,0,0)$.
+
+Sylvester's Law of Inertia explains why
+this normalization is possible: every
+real symmetric positive definite matrix
+is congruent to the identity matrix.
+
+An important consequence appears in the
+Mahalanobis distance, defined for a
+positive definite covariance matrix by
+\[
+    d_M^2(x,\mu)
+    =(x-\mu)^T\Sigma^{-1}(x-\mu).
+\]
+
+Under an invertible change of coordinates,
+\[
+    y=S^T(x-\mu),
+    \qquad
+    \Sigma_Y=S^T\Sigma S,
+\]
+we obtain
+\[
+    \Sigma_Y^{-1}
+    =S^{-1}\Sigma^{-1}S^{-T}.
+\]
+
+Consequently,
+\[
+\begin{aligned}
+    y^T\Sigma_Y^{-1}y
+    &=(x-\mu)^TS
+      S^{-1}\Sigma^{-1}S^{-T}
+      S^T(x-\mu)\\
+    &=(x-\mu)^T\Sigma^{-1}(x-\mu).
+\end{aligned}
+\]
+
+Thus, the Mahalanobis distance is invariant
+under invertible linear changes of coordinates.
+
+This illustrates a broader geometric principle:
+although a covariance matrix changes with the
+coordinate system, the statistical geometry
+it describes can remain unchanged.
+
+
+\subsection{Fisher Information and Reparameterization}
+
+A further application arises in statistical
+parameter estimation.
+
+Let $\theta\in\mathbb{R}^n$ be a parameter
+vector and let $\ell(\theta;Z)$ denote
+the log-likelihood function associated
+with an observation $Z$.
+
+The score vector is defined by
+\[
+    g_\theta
+    =\nabla_\theta\ell(\theta;Z).
+\]
+
+Under the usual regularity assumptions,
+the Fisher information matrix can be written as
+\[
+    I_\theta
+    =\mathbb{E}[g_\theta g_\theta^T].
+\]
+
+The Fisher information matrix is symmetric
+and positive semidefinite, since
+\[
+    v^TI_\theta v
+    =\mathbb{E}[(v^Tg_\theta)^2]\geq 0.
+\]
+
+Now suppose that we introduce a new parameter
+vector $\phi$ through a smooth, invertible
+reparameterization
+\[
+    \theta=h(\phi).
+\]
+
+Let
+\[
+    J=\frac{\partial\theta}{\partial\phi}
+\]
+denote its Jacobian matrix, assumed invertible
+at the parameter value under consideration.
+
+By the multivariable chain rule,
+\[
+    g_\phi=J^Tg_\theta.
+\]
+
+Consequently,
+\[
+\begin{aligned}
+    I_\phi
+    &=\mathbb{E}[g_\phi g_\phi^T]\\
+    &=\mathbb{E}[J^Tg_\theta g_\theta^TJ]\\
+    &=J^T\mathbb{E}[g_\theta g_\theta^T]J.
+\end{aligned}
+\]
+
+Therefore,
+\[
+    \boxed{I_\phi=J^TI_\theta J}.
+\]
+
+Once again, we obtain a congruence
+transformation.
+
+By Sylvester's Law of Inertia,
+\[
+    \boxed{
+    \operatorname{In}(I_\phi)
+    =\operatorname{In}(I_\theta).
+    }
+\]
+
+Thus, a smooth, locally invertible
+reparameterization preserves the rank
+and inertia of the Fisher information matrix.
+
+In particular, if the Fisher information
+matrix is positive definite, it remains
+positive definite under such a
+reparameterization.
+
+Likewise, if the Fisher information matrix
+is singular, an invertible reparameterization
+cannot remove that singularity.
+
+This is important in parameter estimation
+because singular Fisher information can
+indicate a lack of local identifiability:
+certain parameter directions may not be
+distinguishable from the available
+statistical information.
+
+
+\subsection{Likelihood Curvature and Critical Points}
+
+The full significance of inertia becomes
+especially apparent when studying the
+curvature of statistical objective functions.
+
+Suppose that $\ell(\theta)$ is a twice
+continuously differentiable log-likelihood
+function, and let
+\[
+    H_\theta
+    =\nabla_\theta^2\ell(\theta)
+\]
+denote its Hessian matrix.
+
+Since the Hessian is symmetric, its inertia
+describes the numbers of positive, negative,
+and zero curvature directions.
+
+Now consider a smooth invertible
+reparameterization
+\[
+    \theta=h(\phi),
+\]
+with Jacobian $J$.
+
+At a stationary point, where
+\[
+    \nabla_\theta\ell(\theta)=0,
+\]
+the multivariable chain rule gives
+\[
+    \boxed{
+    H_\phi=J^TH_\theta J.
+    }
+\]
+
+Thus, the Hessians in the two parameterizations
+are congruent at corresponding stationary points.
+
+Sylvester's Law of Inertia therefore implies
+\[
+    \boxed{
+    \operatorname{In}(H_\phi)
+    =\operatorname{In}(H_\theta).
+    }
+\]
+
+This has an important interpretation.
+
+If the Hessian is negative definite, the
+stationary point is a strict local maximum.
+If it is positive definite, the stationary
+point is a strict local minimum.
+If it has both positive and negative
+eigenvalues, the stationary point is
+a saddle point.
+
+Because inertia is preserved under
+invertible reparameterization, these
+nondegenerate curvature classifications
+do not depend on the choice of parameter
+coordinates.
+
+\begin{remark}
+For nonlinear reparameterizations, the Hessian
+transformation generally contains additional
+terms involving first derivatives of the
+objective function. These terms vanish at
+stationary points, which is why the
+congruence relation above holds there.
+\end{remark}
+
+The preceding examples illustrate how
+Sylvester's Law of Inertia provides a
+unifying principle across several areas
+of mathematical statistics.
+
+Whether we are transforming covariance
+matrices, whitening multivariate data,
+reparameterizing statistical models, or
+examining the curvature of likelihood
+functions, congruence preserves fundamental
+structural information that is independent
+of the particular coordinate system.
+
+% --------------------------------------------------
+% Conclusion and Historical Note
+% --------------------------------------------------
+
+\section{Conclusion}
+
+In this note, we have explored the relationship
+between quadratic forms, matrix congruence, and
+Sylvester's Law of Inertia. Beginning with the
+distinction between similarity and congruence,
+we introduced the concept of inertia and established
+that the numbers of positive, negative, and zero
+eigenvalues of a real symmetric matrix remain
+invariant under congruence.
+
+We then presented a detailed proof of Sylvester's
+Law of Inertia in both directions, using the
+spectral theorem, orthonormal eigenbases, and
+the rank-nullity theorem. Finally, we explored
+its applications in mathematical statistics,
+including covariance transformations, whitening,
+Fisher information, and likelihood optimization.
+The central lesson is that although individual
+eigenvalues may change under congruence, their
+distribution into positive, negative, and zero
+values remains unchanged.
+
+It would be rather unfair to conclude this note
+without mentioning the remarkable mathematician
+whose name is associated with this theorem.
+James Joseph Sylvester (1814--1897) was an English
+mathematician who played a pioneering role in
+the development of modern matrix theory and
+helped establish matrix algebra as a mathematical
+subject in its own right. He introduced the
+term \emph{matrix} in 1850, and his mathematical
+exchanges with Arthur Cayley contributed
+significantly to the emergence of modern
+linear algebra.
+
+Interestingly, Sylvester's academic career
+was almost as extraordinary as his mathematics.
+Despite ranking second in the Cambridge
+Mathematical Tripos of 1837, he was initially
+denied a degree because his Jewish faith
+prevented him from subscribing to the religious
+requirements of the university.
+
+His teaching career was hardly uneventful either.
+In 1841, Sylvester accepted a professorship at
+the University of Virginia, but his appointment
+ended rather dramatically in 1842 following a
+dispute involving student misconduct.
+
+According to a famous anecdote, Sylvester once
+became involved in a confrontation with a student
+and struck him with a sword-cane. The student
+reportedly collapsed, leaving Sylvester briefly
+convinced that he had killed him!
+
+More colorful versions of the story portray
+Sylvester as an exceptionally strict teacher,
+whose students were too frightened to ask
+questions. Indeed, according to such tales,
+the real danger was not asking a question,
+but being asked one by Sylvester himself.
+If the unfortunate student failed to answer,
+the punishment was supposedly rather more
+physical than a poor examination grade!
+
+These stories even portray Sylvester as a
+mathematician repeatedly losing teaching
+positions because of his temperament and
+having to seek fresh appointments elsewhere.
+Although such embellishments are difficult
+to substantiate historically, his turbulent
+experience at Virginia and his subsequent
+moves between England and America certainly
+make for an unusually eventful academic career.
+
+In 1876, Sylvester joined the newly established
+Johns Hopkins University, where he helped
+develop advanced mathematical education
+and founded the American Journal of Mathematics.
+Among the younger scholars he mentored
+were Thomas Craig, Fabian Franklin, and
+Christine Ladd, later known as Christine
+Ladd-Franklin, who went on to distinguished
+intellectual careers. Particularly remarkable
+was his encouragement of Christine Ladd at
+a time when women were largely excluded from
+advanced mathematical education. His willingness
+to support and mentor a female mathematician
+was unusually progressive for his era and
+reveals another, perhaps less eccentric,
+side of Sylvester's personality.
+
+One might therefore jokingly wonder whether
+Sylvester's legendary teaching methods
+actually worked. After all, several of his
+students became accomplished mathematicians.
+Perhaps a little fear of the professor was
+the secret ingredient---who knows!
+
+Of course, the more convincing explanation
+is Sylvester's extraordinary mathematical
+insight, intellectual enthusiasm, and
+commitment to developing younger scholars.
+
+Whatever the truth behind the more entertaining
+stories, Sylvester's lasting contribution
+lies in the mathematics he helped create.
+His Law of Inertia remains a beautiful example
+of how a seemingly simple observation about
+the signs of eigenvalues can reveal a profound
+and coordinate-independent mathematical
+structure.
+
+Perhaps that is the most fitting conclusion:
+mathematicians, with all their eccentricities,
+eventually pass into history, but their
+mathematical ideas continue to educate
+generations long after they are gone.
+
+% --------------------------------------------------
+% References
+% --------------------------------------------------
+
+\begin{thebibliography}{99}
+
+\bibitem{schultz2010}
+A. Schultz,
+\emph{Congruence; Sylvester's Law of Inertia},
+Math 416 Lecture Notes,
+University of Illinois at Urbana-Champaign,
+April 22, 2010.
+\url{https://palmer.wellesley.edu/~aschultz/w10/math416/coursenotes_and_handouts/coursenotes_100422.pdf}
+
+\bibitem{rao2000}
+A. Ramachandra Rao and P. Bhimasankaram,
+\emph{Linear Algebra},
+2nd edition,
+Texts and Readings in Mathematics, Vol. 19,
+Hindustan Book Agency, 2000.
+
+\bibitem{anderson2003}
+T. W. Anderson,
+\emph{An Introduction to Multivariate Statistical Analysis},
+3rd edition,
+Wiley-Interscience, 2003.
+
+\bibitem{casella2002}
+G. Casella and R. L. Berger,
+\emph{Statistical Inference},
+2nd edition,
+Duxbury, 2002.
+
+\bibitem{nocedal2006}
+J. Nocedal and S. J. Wright,
+\emph{Numerical Optimization},
+2nd edition,
+Springer, 2006.
+
+
+\end{thebibliography}
+\end{document}
